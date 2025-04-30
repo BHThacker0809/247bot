@@ -1,5 +1,36 @@
 const mineflayer = require('mineflayer');
 const readline = require('readline');
+const express = require('express');
+const app = express();
+
+app.use(express.json()); // To parse JSON bodies
+
+// Serve black page
+app.get('/', (req, res) => {
+  res.send(`
+    <html>
+      <body style="background-color:black; margin:0;">
+      </body>
+    </html>
+  `);
+});
+
+// Handle POST
+app.post('/', (req, res) => {
+  console.log('🔵 POST received:', req.body);
+  res.json({ status: 'ok' });
+});
+
+// Handle GET
+app.get('/api/status', (req, res) => {
+  res.json({ message: 'Bot is running' });
+});
+
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🌐 Web server is running on port ${PORT}`);
+});
 
 
 function createBot() {
